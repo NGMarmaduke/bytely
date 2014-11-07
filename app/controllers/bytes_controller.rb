@@ -1,5 +1,6 @@
 class BytesController < ApplicationController
   before_action :find_byte, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:redirect]
   def index
     @bytes = Byte.all
   end
