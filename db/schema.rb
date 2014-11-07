@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107152216) do
+ActiveRecord::Schema.define(version: 20141107152841) do
 
   create_table "bytes", force: true do |t|
     t.string   "full_url"
@@ -20,5 +20,7 @@ ActiveRecord::Schema.define(version: 20141107152216) do
     t.datetime "updated_at"
     t.integer  "click_count", default: 0
   end
+
+  add_index "bytes", ["byte"], name: "index_bytes_on_byte"
 
 end
