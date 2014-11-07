@@ -8,5 +8,9 @@
   %strong Full Url:
   = @byte.full_url
 
+%p
+  %strong Click count:
+  = @byte.click_count
+
 = link_to 'Edit', edit_byte_path(@byte) |
 = link_to 'Back', bytes_path
