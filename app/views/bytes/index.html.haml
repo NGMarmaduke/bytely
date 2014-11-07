@@ -1,0 +1,20 @@
+%h1 Listing bytes
+
+%table
+  %thead
+    %tr
+      %th Byte
+      %th Full Url
+      %th
+      %th
+
+  %tbody
+    -@bytes.each do |byte|
+      %tr
+        %td= link_to byte.byte, byte
+        %td= link_to byte.full_url, byte.full_url, :target => '_blank'
+        %td= link_to 'Edit', edit_byte_path(byte)
+        %td= link_to 'Destroy', byte, method: :delete, data: { confirm: 'Are you sure?' }
+%br
+
+= link_to 'New Byte', new_byte_path

@@ -4,9 +4,9 @@ Bytely::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-  root 'byte#welcome'
-  resources :byte
-  get ':byte' => 'byte#redirect'
+  root 'bytes#welcome'
+  resources :bytes
+  get ':byte' => 'bytes#redirect'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
