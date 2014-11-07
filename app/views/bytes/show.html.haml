@@ -2,11 +2,11 @@
 
 %p
   %strong Byte:
-  = @byte.byte
+  = link_to "#{@host}/#{@byte.byte}", "http://#{@host}/#{@byte.byte}", :target => '_blank'
 
 %p
   %strong Full Url:
-  = @byte.full_url
+  = link_to @byte.full_url, @byte.full_url
 
 %p
   %strong Click count:
