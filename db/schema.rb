@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107221320) do
+ActiveRecord::Schema.define(version: 20141108193019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 20141107221320) do
   end
 
   add_index "bytes", ["byte"], name: "index_bytes_on_byte", using: :btree
+
+  create_table "clicks", force: true do |t|
+    t.string   "referrer_domain"
+    t.string   "referrer"
+    t.string   "ip"
+    t.string   "device"
+    t.integer  "byte_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

@@ -17,4 +17,37 @@
         %td.byte-action= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_byte_path(@byte)
         %td.byte-action= link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, @byte, method: :delete, data: { confirm: 'Are you sure?' }
 
+%ul.nav.nav-tabs{:role => "tablist"}
+  %li.active{:role => "presentation"}
+    %a{:href => "#refferes", :role => "tab", 'data-toggle' => "tab"} Referrers
+  %li{:role => "presentation"}
+    %a{:href => "#clicks", :role => "tab", 'data-toggle' => "tab"} Clicks
+  %li{:role => "presentation"}
+    %a{:href => "#devices", :role => "tab", 'data-toggle' => "tab"} Devices
+
+.tab-content
+  #refferes.tab-pane.fade.in.active{:role => "tabpanel"}
+    %table.table
+      %thead
+        %tr
+          %th Count
+          %th Domain
+      %tbody
+        - @byte.click_count_by_domains.each do |clicks|
+          %tr
+            %td= clicks[1]
+            %td= clicks[0]
+  #clicks.tab-pane.fade{:role => "tabpanel"} clicks
+  #devices.tab-pane.fade{:role => "tabpanel"}
+    %table.table
+      %thead
+        %tr
+          %th Count
+          %th Device
+      %tbody
+        - @byte.click_count_by_devices.each do |clicks|
+          %tr
+            %td= clicks[1]
+            %td= clicks[0].capitalize
+
 = link_to "<span class='glyphicon glyphicon-chevron-left'></span> Back".html_safe, bytes_path, :class => 'btn btn-default'

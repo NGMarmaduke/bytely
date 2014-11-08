@@ -63,6 +63,10 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
+    mobileesp_converted (0.2.3)
+    mobvious (0.3.2)
+      mobileesp_converted (~> 0.2.0)
+      rack (>= 1.1.0)
     multi_json (1.10.1)
     orm_adapter (0.5.0)
     pg (0.17.1)
@@ -144,6 +148,7 @@ DEPENDENCIES
   haml
   jbuilder (~> 1.2)
   jquery-rails
+  mobvious
   pg
   rails (= 4.0.0)
   rails_12factor

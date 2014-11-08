@@ -14,6 +14,7 @@ gem 'bootstrap-sass'
 gem 'will_paginate-bootstrap'
 gem 'rails_12factor', group: :production
 gem 'unicorn'
+gem 'mobvious'
 
 group :doc do
   gem 'sdoc', require: false

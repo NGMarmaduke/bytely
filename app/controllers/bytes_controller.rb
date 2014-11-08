@@ -12,8 +12,9 @@ class BytesController < ApplicationController
   def redirect
     byte = Byte.where(:byte => params[:byte]).first
     redirect_to FALL_BACK_URL and return if byte.nil?
-    byte.update_attributes(:click_count => byte.click_count+1)
     redirect_to byte.full_url
+
+    byte.record_click!(:request => request)
   end
   def create
     @byte = Byte.new(byte_params)
