@@ -8,13 +8,13 @@ class Byte < ActiveRecord::Base
 
   def record_click!(params = {})
     request = params[:request]
-
+    ua = AgentOrange::UserAgent.new(request.env["HTTP_USER_AGENT"])
     Click.create(
         byte: self,
         ip: request.remote_ip,
         referrer: request.referrer || 'Direct',
         referrer_domain: get_domain(request.referrer),
-        device: request.env['mobvious.device_type'])
+        device: "#{ua.device.name} (#{ua.device.platform.name})")
   end
 
   def click_count
@@ -27,6 +27,10 @@ class Byte < ActiveRecord::Base
 
   def click_count_by_devices
     Click.where(:byte => self).count(:group => :device).sort_by{|k,v| -v}
+  end
+
+  def click_count_by_day
+    Click.where(:byte => self).group_by_day(:created_at, format: "%F").count
   end
 
   private

@@ -14,7 +14,8 @@ gem 'bootstrap-sass'
 gem 'will_paginate-bootstrap'
 gem 'rails_12factor', group: :production
 gem 'unicorn'
-gem 'mobvious'
+gem 'agent_orange'
+gem 'groupdate'
 
 group :doc do
   gem 'sdoc', require: false

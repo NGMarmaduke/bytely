@@ -1,3 +1,5 @@
+= link_to "<span class='glyphicon glyphicon-chevron-left'></span> Back".html_safe, bytes_path, :class => 'btn btn-default btn-back'
+
 .panel.panel-default
   .panel-heading
     %p.lead= link_to "#{@host}/#{@byte.byte}", "http://#{@host}/#{@byte.byte}", :target => '_blank'
@@ -19,14 +21,16 @@
 
 %ul.nav.nav-tabs{:role => "tablist"}
   %li.active{:role => "presentation"}
-    %a{:href => "#refferes", :role => "tab", 'data-toggle' => "tab"} Referrers
-  %li{:role => "presentation"}
     %a{:href => "#clicks", :role => "tab", 'data-toggle' => "tab"} Clicks
+  %li{:role => "presentation"}
+    %a{:href => "#refferes", :role => "tab", 'data-toggle' => "tab"} Referrers
   %li{:role => "presentation"}
     %a{:href => "#devices", :role => "tab", 'data-toggle' => "tab"} Devices
 
 .tab-content
-  #refferes.tab-pane.fade.in.active{:role => "tabpanel"}
+  #clicks.tab-pane.fade.in.active{:role => "tabpanel"}
+    #chartdiv
+  #refferes.tab-pane.fade{:role => "tabpanel"}
     %table.table
       %thead
         %tr
@@ -37,7 +41,6 @@
           %tr
             %td= clicks[1]
             %td= clicks[0]
-  #clicks.tab-pane.fade{:role => "tabpanel"} clicks
   #devices.tab-pane.fade{:role => "tabpanel"}
     %table.table
       %thead
@@ -50,4 +53,61 @@
             %td= clicks[1]
             %td= clicks[0].capitalize
 
-= link_to "<span class='glyphicon glyphicon-chevron-left'></span> Back".html_safe, bytes_path, :class => 'btn btn-default'
+:javascript
+  var chart = AmCharts.makeChart("chartdiv", {
+          "type": "serial",
+          "theme": "light",
+          "pathToImages": "http://www.amcharts.com/lib/3/images/",
+          "dataDateFormat": "YYYY-MM-DD",
+          "valueAxes": [{
+              "id":"v1",
+              "axisAlpha": 0,
+              "position": "left"
+          }],
+          "graphs": [{
+        "id": "g1",
+              "bullet": "round",
+              "bulletBorderAlpha": 1,
+              "bulletColor": "#FFFFFF",
+              "bulletSize": 5,
+              "hideBulletsCount": 50,
+              "lineThickness": 2,
+              "title": "red line",
+              "useLineColorForBulletBorder": true,
+              "valueField": "value"
+          }],
+          "chartScrollbar": {
+        "graph": "g1",
+        "scrollbarHeight": 30
+      },
+          "chartCursor": {
+              "cursorPosition": "mouse",
+              "pan": true,
+               "valueLineEnabled":true,
+               "valueLineBalloonEnabled":true
+          },
+          "categoryField": "date",
+          "categoryAxis": {
+              "parseDates": true,
+              "dashLength": 1,
+              "minorGridEnabled": true,
+              "position": "top"
+          },
+          exportConfig:{
+            menuRight: '20px',
+            menuBottom: '50px',
+            menuItems: [{
+            icon: 'http://www.amcharts.com/lib/3/images/export.png',
+            format: 'png'
+            }]
+          },
+          "dataProvider": #{ @byte.click_count_by_day.map{|k,v| {date: k, value: v}}.to_json }
+      }
+  );
+
+  chart.addListener("rendered", zoomChart);
+
+  zoomChart();
+  function zoomChart(){
+      chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+  }
