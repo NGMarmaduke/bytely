@@ -19,3 +19,4 @@
         %td.byte-action= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_byte_path(byte)
         %td.byte-action= link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, byte, method: :delete, data: { confirm: 'Are you sure?' }
 %br
+= will_paginate @bytes, renderer: BootstrapPagination::Rails

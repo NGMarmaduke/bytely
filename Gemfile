@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'haml'
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'will_paginate-bootstrap'
 
 group :doc do
   gem 'sdoc', require: false
