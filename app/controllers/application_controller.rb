@@ -7,4 +7,8 @@ class ApplicationController < ActionController::Base
   def set_host
     @host = request.host
   end
+
+  def after_sign_in_path_for(resource)
+    bytes_path
+  end
 end

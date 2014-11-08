@@ -1,16 +1,20 @@
-%p#notice= notice
+.panel.panel-default
+  .panel-heading
+    %p.lead= link_to "#{@host}/#{@byte.byte}", "http://#{@host}/#{@byte.byte}", :target => '_blank'
+  %table.table
+    %thead
+      %tr
+        %th Byte
+        %th Full Url
+        %th Click Count
+        %th.byte-action Edit
+        %th.byte-action Delete
+    %tbody
+      %tr
+        %td= @byte.byte
+        %td= link_to @byte.full_url, @byte.full_url, :target => '_blank'
+        %td= @byte.click_count
+        %td.byte-action= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_byte_path(@byte)
+        %td.byte-action= link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, @byte, method: :delete, data: { confirm: 'Are you sure?' }
 
-%p
-  %strong Byte:
-  = link_to "#{@host}/#{@byte.byte}", "http://#{@host}/#{@byte.byte}", :target => '_blank'
-
-%p
-  %strong Full Url:
-  = link_to @byte.full_url, @byte.full_url
-
-%p
-  %strong Click count:
-  = @byte.click_count
-
-= link_to 'Edit', edit_byte_path(@byte) |
-= link_to 'Back', bytes_path
+= link_to "<span class='glyphicon glyphicon-chevron-left'></span> Back".html_safe, bytes_path, :class => 'btn btn-default'

@@ -1,13 +1,14 @@
-%h1 Listing bytes
+= link_to "<span class='glyphicon glyphicon-plus'></span> New Byte".html_safe, new_byte_path, :class => 'btn btn-default new-byte-button'
+%h1 Listing all bytes
 
-%table
+%table.table.table-striped
   %thead
     %tr
       %th Byte
       %th Full Url
       %th Click Count
-      %th
-      %th
+      %th.byte-action Edit
+      %th.byte-action Delete
 
   %tbody
     -@bytes.each do |byte|
@@ -15,8 +16,6 @@
         %td= link_to byte.byte, byte
         %td= link_to byte.full_url, byte.full_url, :target => '_blank'
         %td= byte.click_count
-        %td= link_to 'Edit', edit_byte_path(byte)
-        %td= link_to 'Destroy', byte, method: :delete, data: { confirm: 'Are you sure?' }
+        %td.byte-action= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe, edit_byte_path(byte)
+        %td.byte-action= link_to "<span class='glyphicon glyphicon-trash'></span>".html_safe, byte, method: :delete, data: { confirm: 'Are you sure?' }
 %br
-
-= link_to 'New Byte', new_byte_path
