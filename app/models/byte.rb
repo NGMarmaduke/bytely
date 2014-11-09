@@ -1,3 +1,5 @@
+require 'timeout'
+require 'net/http'
 class Byte < ActiveRecord::Base
   before_save :prepend_http
   after_initialize :set_defaults
