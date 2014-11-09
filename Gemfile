@@ -16,6 +16,7 @@ gem 'rails_12factor', group: :production
 gem 'unicorn'
 gem 'agent_orange'
 gem 'groupdate'
+gem 'chartkick'
 
 group :doc do
   gem 'sdoc', require: false

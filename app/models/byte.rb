@@ -35,11 +35,16 @@ class Byte < ActiveRecord::Base
   end
 
   def click_count_by_day
-    Click.where(:byte => self).group_by_day(:created_at, format: "%F").count
+    range = self.created_at..DateTime.now
+    Click.where(:byte => self).group_by_day(:created_at, format: "%F", range: range).count
   end
 
   def click_count_by_location
     Click.where(:byte => self).count(:group => :location).sort_by{|k,v| -v}
+  end
+
+  def click_count_by_country
+    Click.where(:byte => self).count(:group => :country).sort_by{|k,v| -v}
   end
 
   private
