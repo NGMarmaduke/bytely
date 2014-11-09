@@ -15,10 +15,10 @@ class Byte < ActiveRecord::Base
     Click.create(
         byte: self,
         ip: request.remote_ip,
-        location: "#{location[:city]} (#{location[:country_code]})",
-        city: location[:city],
-        country: location[:country_name],
-        country_code: location[:country_code],
+        location: "#{location['city']} (#{location['country_code']})",
+        city: location['city'],
+        country: location['country_name'],
+        country_code: location['country_code'],
         referrer: request.referrer || 'Direct',
         referrer_domain: get_domain(request.referrer),
         device: "#{ua.device.name} (#{ua.device.platform.name})")
@@ -64,9 +64,9 @@ class Byte < ActiveRecord::Base
   end
   def resuce_location_defaults
     {
-      :country_name => 'Unkown',
-      :country_code => 'XX',
-      :city => 'Unkown'
+      'country_name' => 'Unkown',
+      'country_code' => 'XX',
+      'city'         => 'Unkown'
     }
   end
   def prepend_http
