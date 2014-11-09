@@ -9,9 +9,14 @@ class Byte < ActiveRecord::Base
   def record_click!(params = {})
     request = params[:request]
     ua = AgentOrange::UserAgent.new(request.env["HTTP_USER_AGENT"])
+    location = get_location(request.remote_ip)
     Click.create(
         byte: self,
         ip: request.remote_ip,
+        location: "#{location[:city]} (#{location[:country_code]})",
+        city: location[:city],
+        country: location[:country_name],
+        country_code: location[:country_code],
         referrer: request.referrer || 'Direct',
         referrer_domain: get_domain(request.referrer),
         device: "#{ua.device.name} (#{ua.device.platform.name})")
@@ -33,11 +38,29 @@ class Byte < ActiveRecord::Base
     Click.where(:byte => self).group_by_day(:created_at, format: "%F").count
   end
 
+  def click_count_by_location
+    Click.where(:byte => self).count(:group => :location).sort_by{|k,v| -v}
+  end
+
   private
   def get_domain(url)
     return 'Direct' if url.nil?
     host = URI.parse(url).host.downcase
     host.start_with?('www.') ? host[4..-1] : host
+  end
+  def get_location(ip)
+    Timeout::timeout(5) { JSON.parse(
+        Net::HTTP.get_response(
+            URI.parse('http://api.hostip.info/get_json.php?ip=' + ip )
+        ).body
+    )} rescue resuce_location_defaults
+  end
+  def resuce_location_defaults
+    {
+      :country_name => 'Unkown',
+      :country_code => 'XX',
+      :city => 'Unkown'
+    }
   end
   def prepend_http
     return if self.full_url.start_with?('http') and self.full_url.include? ('://')

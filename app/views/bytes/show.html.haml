@@ -26,6 +26,8 @@
     %a{:href => "#refferes", :role => "tab", 'data-toggle' => "tab"} Referrers
   %li{:role => "presentation"}
     %a{:href => "#devices", :role => "tab", 'data-toggle' => "tab"} Devices
+  %li{:role => "presentation"}
+    %a{:href => "#locations", :role => "tab", 'data-toggle' => "tab"} Locations
 
 .tab-content
   #clicks.tab-pane.fade.in.active{:role => "tabpanel"}
@@ -52,6 +54,17 @@
           %tr
             %td= clicks[1]
             %td= clicks[0].capitalize
+  #locations.tab-pane.fade{:role => "tabpanel"}
+    %table.table
+      %thead
+        %tr
+          %th Count
+          %th Location
+      %tbody
+        - @byte.click_count_by_location.each do |clicks|
+          %tr
+            %td= clicks[1]
+            %td= clicks[0]
 
 :javascript
   var chart = AmCharts.makeChart("chartdiv", {
