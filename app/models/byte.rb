@@ -58,7 +58,7 @@ class Byte < ActiveRecord::Base
   def get_location(ip)
     Timeout::timeout(5) { JSON.parse(
         Net::HTTP.get_response(
-            URI.parse('http://api.hostip.info/get_json.php?ip=' + ip )
+            URI.parse('http://freegeoip.net/json/' + ip )
         ).body
     )} rescue resuce_location_defaults
   end
